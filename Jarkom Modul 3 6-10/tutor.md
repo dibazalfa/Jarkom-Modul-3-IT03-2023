@@ -1,7 +1,7 @@
 6. Pada masing-masing worker PHP, lakukan konfigurasi virtual host untuk website berikut dengan menggunakan php 7.3. (6)
 
-6.1. Masukkan code script pada file /root/.bashrc:
-
+6.1. Masukkan code script pada file /root/.bashrc pada Lugner:
+Lugner.sh
 ```
 echo nameserver 10.65.1.3 > /etc/resolv.conf
 
