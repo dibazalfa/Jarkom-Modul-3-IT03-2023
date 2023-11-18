@@ -425,7 +425,8 @@ location / {
         allow 10.65.3.168;
         deny all;
     proxy_pass http://worker;
-}```
+}
+```
 
 12.2 Lalu tentukan client tetap (client yang memiliki akses). Tambahkan konfigurasi pada dhcp server (Himmel)
 ```
