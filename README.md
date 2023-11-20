@@ -568,18 +568,19 @@ Jika ingin menggunakan 2 Worker hapus worker sehingga jumlah worker sesuai yang 
 ### Result Nomor 9
 #### 3 Worker
 ![Screenshot 2023-11-19 022652](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/a0e966c9-c67d-4ecb-b08c-d4a5cbc0c89e)
-![Screenshot 2023-11-19 022718](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/29458275-3399-48f0-8846-7e2b21c0ddfa)
+<img src="https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/29458275-3399-48f0-8846-7e2b21c0ddfa" width="600" height="400">
 
 #### 2 Worker
 ![Screenshot 2023-11-19 022857](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/8b34fdf7-7491-4ccc-8c55-e68b53193cf4)
-![Screenshot 2023-11-19 022919](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/a009f57f-99b4-46de-a992-458c26eb8dae)
+<img src="https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/a009f57f-99b4-46de-a992-458c26eb8dae" width="600" height="400">
 
 #### 1 Worker
 ![Screenshot 2023-11-19 022955](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/a65aa29e-754b-4a8c-a34c-686bf5b49124)
-![Screenshot 2023-11-19 023015](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/c5d33869-1ee7-4d32-9f88-5dfc8fed7b3e)
+<img src="https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/c5d33869-1ee7-4d32-9f88-5dfc8fed7b3e" width="600" height="400">
 
 #### Grafik
-<foto>
+<foto
+
 
 # Nomor 10
 
