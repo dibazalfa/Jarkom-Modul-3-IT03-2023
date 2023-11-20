@@ -708,8 +708,7 @@ service nginx restart
 Jalankan `lynx http://granz.channel.it03.com/its` pada Revolte.
 
 ### Result Nomor 11
-<foto>
-
+![Screenshot 2023-11-19 024315](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/ebc0802d-5d6a-40b8-80a4-8e3ac5eab9ac)
 
 # Nomor 12
 Selanjutnya LB ini hanya boleh diakses oleh client dengan IP [Prefix IP].3.69, [Prefix IP].3.70, [Prefix IP].4.167, dan [Prefix IP].4.168.
@@ -747,6 +746,9 @@ hwaddress ether 72:b7:93:55:30:f5
 echo "$config" > /etc/network/interfaces
 ```
 Script diatas memodifikasi `/etc/network/interfaces` atau juga dikenal dengan konfigurasi `telnet`.
+
+IP Revolte setelah konfigurasi:
+![Screenshot 2023-11-19 025207](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/e966b06f-b6c5-4b59-bbac-388ef1ecad9d)
 
 Jalankan `lynx http://granz.channel.it03.com/` pada node Revolte! Jika dijalankan pada node lain tidak akan berfungsi karena tidak memiliki izin akses.
 
