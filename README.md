@@ -431,9 +431,153 @@ Jalankan command berikut untuk dianalisis
 <img src="https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/4f6b91e3-63cd-4d59-b077-e6764de1bc5f" width="600" height="400">
 
 ### Grafik
-<foto>
+<foto
 
 # Nomor 9
+Dengan menggunakan algoritma Round Robin, lakukan testing dengan menggunakan 3 worker, 2 worker, dan 1 worker sebanyak 100 request dengan 10 request/second, kemudian tambahkan grafiknya pada grimoire.
+
+Masukan script yang sama seperti no.7 hanya saja jumlah worker disesuaikan:
+#### 3 Worker
+```
+upstream worker {
+    server 10.65.3.2; 
+    server 10.65.3.3;
+    server 10.65.3.4;
+}
+```
+#### 2 Worker
+```
+upstream worker {
+    server 10.65.3.2; 
+    server 10.65.3.3;
+}
+```
+#### 1 Worker
+```
+upstream worker {
+    server 10.65.3.2; 
+}
+```
+
+### Eisen.sh (3 Worker)
+```
+cp /etc/nginx/sites-available/default /etc/nginx/sites-available/lb_php
+
+echo '
+    upstream worker {
+    server 10.65.3.2; 
+    server 10.65.3.3;
+    server 10.65.3.4;
+}
+
+server {
+    listen 80;
+    server_name granz.channel.it03.com www.granz.channel.it03.com;
+
+    root /var/www/html;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+        location / {
+
+        proxy_pass http://worker;
+    }
+
+ln -sf /etc/nginx/sites-available/lb_php /etc/nginx/sites-enabled/
+
+if [ -f /etc/nginx/sites-enabled/default ]; then
+    rm /etc/nginx/sites-enabled/default
+fi
+
+service nginx restart
+```
+
+### Eisen.sh (2 Worker)
+```
+cp /etc/nginx/sites-available/default /etc/nginx/sites-available/lb_php
+
+echo '
+    upstream worker {
+    server 10.65.3.2; 
+    server 10.65.3.3;
+   #server 10.65.3.4;
+}
+
+server {
+    listen 80;
+    server_name granz.channel.it03.com www.granz.channel.it03.com;
+
+    root /var/www/html;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+        location / {
+
+        proxy_pass http://worker;
+    }
+
+ln -sf /etc/nginx/sites-available/lb_php /etc/nginx/sites-enabled/
+
+if [ -f /etc/nginx/sites-enabled/default ]; then
+    rm /etc/nginx/sites-enabled/default
+fi
+
+service nginx restart
+```
+
+### Eisen.sh (1 Worker)
+```
+cp /etc/nginx/sites-available/default /etc/nginx/sites-available/lb_php
+
+echo '
+    upstream worker {
+    server 10.65.3.2; 
+   #server 10.65.3.3;
+   #server 10.65.3.4;
+}
+
+server {
+    listen 80;
+    server_name granz.channel.it03.com www.granz.channel.it03.com;
+
+    root /var/www/html;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+        location / {
+
+        proxy_pass http://worker;
+    }
+
+ln -sf /etc/nginx/sites-available/lb_php /etc/nginx/sites-enabled/
+
+if [ -f /etc/nginx/sites-enabled/default ]; then
+    rm /etc/nginx/sites-enabled/default
+fi
+
+service nginx restart
+```
+Jika ingin menggunakan 2 Worker hapus worker sehingga jumlah worker sesuai yang diinginkan. Begitu seterusnya.
+
+### Result Nomor 9
+#### 3 Worker
+<foo>
+
+### 2 Worker
+<foto>
+
+### 1 Worker
+<fot>
+
+### Grafik
+<foto>
+
 
 # Nomor 10
 
