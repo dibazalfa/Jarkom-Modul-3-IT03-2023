@@ -8,6 +8,7 @@ Adiba Zalfa Camilla | 5027211060 | https://github.com/dibazalfa
 Wiridlangit Suluh Jiwangga | 5027211064 | https://github.com/wiridlangit
 
 ## Daftar isi
+- [Topologi](#topologi)
 - [Konfigurasi](#konfigurasi)
 - [Nomor 1](#nomor-1)
 - [Nomor 2](#nomor-2)
@@ -29,6 +30,10 @@ Wiridlangit Suluh Jiwangga | 5027211064 | https://github.com/wiridlangit
 - [Nomor 18](#nomor-18)
 - [Nomor 19](#nomor-19)
 - [Nomor 20](#nomor-20)
+
+# Topologi
+![Screenshot 2023-11-15 205506](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/48c822b2-c96c-495d-9928-cc512205338c)
+
 
 # Konfigurasi
 
