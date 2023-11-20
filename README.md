@@ -1084,16 +1084,21 @@ Untuk memastikan bahwa database pada denken juga dapat diakses melalui laravel w
 Frieren, Flamme, dan Fern memiliki Granz Channel sesuai dengan quest guide berikut https://github.com/martuafernando/laravel-praktikum-jarkom . Jangan lupa melakukan instalasi PHP8.0 dan Composer
 
 Lakukan instalasi berikut pada ketiga Laravel Worker
-`apt-get install php8.0-mbstring php8.0-xml php8.0-cli php8.0-common php8.0-intl php8.0-opcache php8.0-readline php8.0-mysql php8.0-fpm php8.0-curl unzip wget -y`
-`wget https://getcomposer.org/download/2.0.13/composer.phar`
-`chmod +x composer.phar`
-`mv composer.phar /usr/bin/composer`
+```
+apt-get install php8.0-mbstring php8.0-xml php8.0-cli php8.0-common php8.0-intl php8.0-opcache php8.0-readline php8.0-mysql php8.0-fpm php8.0-curl unzip wget -y
+wget https://getcomposer.org/download/2.0.13/composer.phar
+chmod +x composer.phar
+mv composer.phar /usr/bin/composer
+```
 
 git clone github
 `cd /var/www`
-`git clone https://github.com/martuafernando/laravel-praktikum-jarkom`
-`composer update`
-`composer install`
+
+```
+git clone https://github.com/martuafernando/laravel-praktikum-jarkom
+composer update
+composer install
+```
 
 Lakukan konfigurasi pada ketiga Laravel Worker
 `cp /var/www/laravel-praktikum-jarkom/.env.example /var/www/laravel-praktikum-jarkom/.env`
@@ -1108,7 +1113,7 @@ DB_USERNAME=kelompokit03
 DB_PASSWORD=passwordit03
 ```
 Jalankan command berikut 
-`
+```
 php artisan migrate:fresh
 php artisan db:seed --class=AiringsTableSeeder
 php artisan key:generate
@@ -1119,7 +1124,7 @@ php artisan storage:link
 php artisan jwt:secret
 php artisan config:clear
 chown -R www-data.www-data /var/www/laravel-praktikum-jarkom/storage
-`
+```
 Database pada Denken akan terisi
 ![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/0bb512f5-aa69-4b64-9863-5b30f59f46ce)
 
@@ -1159,22 +1164,221 @@ location ~ /\.ht {
 }
 ```
 Kemudian jalankan command berikut 
-`ln -s /etc/nginx/sites-available/fff /etc/nginx/sites-enabled/`
-`chown -R www-data.www-data /var/www/laravel-praktikum-jarkom/storage`
-`service php8.0-fpm start`
-`service nginx restart`
+```
+ln -s /etc/nginx/sites-available/fff /etc/nginx/sites-enabled/
+chown -R www-data.www-data /var/www/laravel-praktikum-jarkom/storage
+service php8.0-fpm start
+service nginx restart
+```
 
 Lakukan test menggunakan `lynx localhost:[port]` (port menyesuaikan worker)
 ![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/13f3a5aa-111d-4c4f-9967-fae912a9432c)
 
 # Nomor 15
+Riegelcom Channel memiliki beberapa endpoint yang harus ditesting sebanyak 100 request dengan 10 request/second. Tambahkan response dan hasil testing pada grimoire.
+
+POST /auth/register
+
+Buat file `register.json` pada client yang berisi 
+```
+{
+"username" : "kelompokit03",
+"password" : "kelompokit03"
+}
+```
+
+Jalankan testing berikut
+`ab -n 100 -c 10 -p register.json -T application/json http://10.65.4.6:8001/api/auth/register`
+
+### Result
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/c675fcb4-3b87-47ec-a251-80c2573703da)
 
 # Nomor 16
+POST /auth/login
+
+Buat file `login.json` pada client yang berisi 
+```
+{
+"username" : "kelompokit03",
+"password" : "kelompokit03"
+}
+```
+
+Jalankan testing berikut
+`ab -n 100 -c 10 -p login.json -T application/json http://10.65.4.6:8001/api/auth/login`
+
+### Result
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/1bec8056-04c1-4fd9-a509-2b42310e2f57)
 
 # Nomor 17
+GET /me
+
+Jalankan command berikut
+```
+curl -X POST -H "Content-Type: application/json" -d @login.json http://10.65.4.6:8001/api/auth/login > login_output.txt
+token=$(cat login_output.txt | jq -r '.token')
+```
+Jalankan testing berikut
+`ab -n 100 -c 10 -H "Authorization: Bearer $token" http://10.65.4.6:8001/api/me`
+
+### Result
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/ea4c526d-4d57-4534-8ebf-11299fa629f3)
 
 # Nomor 18
+Lakukan konfigurasi Load Balancer pada EISEN
+
+`/etc/nginx/sites-available/laravel-fff`
+```
+upstream worker {
+    server 10.65.4.6:8001;
+    server 10.65.4.5:8002;
+    server 10.65.4.4:8003;
+}
+
+server {
+    listen 80;
+    server_name riegel.canyon.it03.com;
+
+    location / {
+        proxy_pass http://worker;
+    }
+}
+```
+```ln -s /etc/nginx/sites-available/laravel-fff /etc/nginx/sites-enabled/```
+
+Pastikan pada Heiter, riegel.canyon.it03.com mengarah pada IP Load Balancer (10.65.2.3)
+
+Lakukan testing menggunakan coommand berikut
+```ab -n 100 -c 10 -p login.json -T application/json http://riegel.canyon.it03.com/api/auth/login```
+
+### Result 
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/c933f39c-d391-471f-b888-993641f7c11f)
+
+Fern
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/b26a3d6a-5479-48ff-81d2-b4a42983625b)
+
+Flamme
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/257b7501-15e1-40c9-95b2-110ea8c42eb1)
+
+Frieren
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/4cbb785e-9a92-4f17-a8e3-b7a931a78a9d)
 
 # Nomor 19
+Untuk meningkatkan performa dari Worker, coba implementasikan PHP-FPM pada Frieren, Flamme, dan Fern. Untuk testing kinerja naikkan 
+- pm.max_children
+- pm.start_servers
+- pm.min_spare_servers
+- pm.max_spare_servers
+sebanyak tiga percobaan dan lakukan testing sebanyak 100 request dengan 10 request/second kemudian berikan hasil analisisnya pada Grimoire.
+
+Dibuat 3 script sebagai berikut 
+
+`testing1.sh`
+```
+#!/bin/bash
+
+echo '[www]
+user = www-data
+group = www-data
+listen = /run/php/php8.0-fpm.sock
+listen.owner = www-data
+listen.group = www-data
+php_admin_value[disable_functions] = exec,passthru,shell_exec,system
+php_admin_flag[allow_url_fopen] = off
+
+; Choose how the process manager will control the number of child processes.
+
+pm = dynamic
+pm.max_children = 10
+pm.start_servers = 5
+pm.min_spare_servers = 3
+pm.max_spare_servers = 8' > /etc/php/8.0/fpm/pool.d/www.conf
+
+service php8.0-fpm restart
+```
+
+`testing2.sh`
+```
+#!/bin/bash
+
+echo '[www]
+user = www-data
+group = www-data
+listen = /run/php/php8.0-fpm.sock
+listen.owner = www-data
+listen.group = www-data
+php_admin_value[disable_functions] = exec,passthru,shell_exec,system
+php_admin_flag[allow_url_fopen] = off
+
+; Choose how the process manager will control the number of child processes.
+
+pm = dynamic
+pm.max_children = 20
+pm.start_servers = 8
+pm.min_spare_servers = 5
+pm.max_spare_servers = 12' > /etc/php/8.0/fpm/pool.d/www.conf
+
+service php8.0-fpm restart
+```
+
+`testing3.sh`
+```
+#!/bin/bash
+
+echo '[www]
+user = www-data
+group = www-data
+listen = /run/php/php8.0-fpm.sock
+listen.owner = www-data
+listen.group = www-data
+php_admin_value[disable_functions] = exec,passthru,shell_exec,system
+php_admin_flag[allow_url_fopen] = off
+
+; Choose how the process manager will control the number of child processes.
+
+pm = dynamic
+pm.max_children = 40
+pm.start_servers = 10
+pm.min_spare_servers = 8
+pm.max_spare_servers = 15' > /etc/php/8.0/fpm/pool.d/www.conf
+
+service php8.0-fpm restart
+```
+
+### Result 
+`testing1.sh`
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/cb6438ca-779e-4c09-9824-08b30e53b495)
+
+`testing2.sh`
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/6424499a-bcf6-4e72-b264-fa43b2ffa81a)
+
+`testing3.sh`
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/6a413001-b756-4bd3-92ac-19db5066a5dd)
 
 # Nomor 20
+Nampaknya hanya menggunakan PHP-FPM tidak cukup untuk meningkatkan performa dari worker maka implementasikan Least-Conn pada Eisen. Untuk testing kinerja dari worker tersebut dilakukan sebanyak 100 request dengan 10 request/second.
+
+Tambahkan konfigurasi seperti berikut pada EISEN
+`/etc/nginx/sites-available/laravel-fff`
+```
+upstream worker {
+    least_conn;
+    server 10.65.4.6:8001;
+    server 10.65.4.5:8002;
+    server 10.65.4.4:8003;
+}
+
+server {
+    listen 80;
+    server_name riegel.canyon.it03.com;
+
+    location / {
+        proxy_pass http://worker;
+    }
+}
+```
+```ln -s /etc/nginx/sites-available/laravel-fff /etc/nginx/sites-enabled/```
+```service nginx restart```
+
+### Result
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/6831cd2a-0639-470a-a2ca-512c4efef86a)
