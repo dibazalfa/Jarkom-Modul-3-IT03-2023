@@ -222,7 +222,7 @@ Gunakan `lynx localhost` untuk periksa apakah konfigurasi web sudah bekerja deng
 <foto>
 
 # Nomor 7
-Kepala suku dari Bredt Region memberikan resource server sebagai berikut: Lawine, 4GB, 2vCPU, dan 80 GB SSD. Linie, 2GB, 2vCPU, dan 50 GB SSD. Lugner 1GB, 1vCPU, dan 25 GB SSD. Aturlah agar Eisen dapat bekerja dengan maksimal, lalu lakukan testing dengan 1000 request dan 100 request/second. (7)
+Kepala suku dari Bredt Region memberikan resource server sebagai berikut: Lawine, 4GB, 2vCPU, dan 80 GB SSD. Linie, 2GB, 2vCPU, dan 50 GB SSD. Lugner 1GB, 1vCPU, dan 25 GB SSD. Aturlah agar Eisen dapat bekerja dengan maksimal, lalu lakukan testing dengan 1000 request dan 100 request/second.
 
 Domain pada DNS Server diarahkan ke Load Balancer Eisen seperti sebagai berikut:
 
@@ -316,7 +316,8 @@ Pada node Revolte (client) jalankan command berikut:
 `ab -n 1000 -c 100 http://granz.channel.it03.com/`
 
 ### Result Nomor 7
-<foto>
+![Screenshot 2023-11-19 020538](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/e948ff02-6d31-42af-b50f-b325bf5b1a00)
+
 
 # Nomor 8
 
