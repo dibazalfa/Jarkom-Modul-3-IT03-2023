@@ -12,9 +12,9 @@ Wiridlangit Suluh Jiwangga | 5027211064 | https://github.com/wiridlangit
 - [Nomor 1](#nomor-1)
 - [Nomor 2](#nomor-2)
 - [Nomor 3](#nomor-3)
-- [Nomor 4](#nomor-4-subdomain)
-- [Nomor 5](#nomor-5-reverse-dns)
-- [Nomor 6](#nomor-6-dns-slave)
+- [Nomor 4](#nomor-4)
+- [Nomor 5](#nomor-5)
+- [Nomor 6](#nomor-6)
 - [Nomor 7](#nomor-7)
 - [Nomor 8](#nomor-8)
 - [Nomor 9](#nomor-9)
@@ -164,7 +164,62 @@ subnet 10.65.4.0 netmask 255.255.255.0 {
 Sein merupakan Client yang memiliki IP Dynamic. IP yang didapat adalah 10.65.4.14 dengan lease time 720, ini sudah sesuai dengan konfigurasi yang diberikan. Client mengarah pada DNS Server dan sudah terhubung dengan internet.
 
 # Nomor 6
+Pada masing-masing worker PHP, lakukan konfigurasi virtual host untuk website berikut dengan menggunakan php 7.3. (6)
 
+Masukkan code script pada file /root/.bashrc:
+### Lugner.sh 
+```
+echo nameserver 10.65.1.3 > /etc/resolv.conf
+
+apt-get update
+apt-get install nginx -y
+apt-get install lynx -y
+apt-get install php php-fpm -y
+apt-get install wget -y
+apt-get install unzip -y
+service nginx start
+service php7.3-fpm start
+
+wget -O '/var/www/granz.channel.it03.com' 'https://drive.google.com/u/0/uc?id=1ViSkRq7SmwZgdK64eRbr5Fm1EGCTPrU1&export=download'
+unzip -o /var/www/granz.channel.it03.com -d /var/www/
+rm /var/www/granz.channel.it03.com
+mv /var/www/modul-3 /var/www/granz.channel.it03.com
+
+source /root/script.sh
+```
+
+### /root/script.sh
+```
+cp /etc/nginx/sites-available/default /etc/nginx/sites-available/granz.channel.it03.com
+ln -s /etc/nginx/sites-available/granz.channel.it03.com /etc/nginx/sites-enabled/
+rm /etc/nginx/sites-enabled/default
+
+echo 'server {
+     listen 80;
+     server_name _;
+
+     root /var/www/granz.channel.it03.com;
+     index index.php index.html index.htm;
+
+     location / {
+         try_files $uri $uri/ /index.php?$query_string;
+     }
+
+     location ~ \.php$ {
+         include snippets/fastcgi-php.conf;
+         fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+         include fastcgi_params;
+     }
+ }' > /etc/nginx/sites-available/granz.channel.it03.com
+
+ service nginx restart
+```
+
+Gunakan `lynx localhost` untuk periksa apakah konfigurasi web sudah bekerja dengan benar.
+
+### Result Nomor 6
+<foto>
 # Nomor 7
 
 # Nomor 8
