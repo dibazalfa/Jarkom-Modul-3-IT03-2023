@@ -416,19 +416,19 @@ Jalankan command berikut untuk dianalisis
 
 #### Round-robin
 ![Screenshot 2023-11-19 021009](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/87fc3c0b-3881-42a9-8693-5528e209cda5)
-![Screenshot 2023-11-19 021037](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/fff0aac6-3912-435f-b9b1-8c302f4167c0)
+<img src="https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/fff0aac6-3912-435f-b9b1-8c302f4167c0" width="600" height="400">
 
 #### Generic hash
 ![Screenshot 2023-11-19 021535](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/0ffbd60c-cf6b-4a34-8aad-aa04e1f3f555)
-![Screenshot 2023-11-19 021603](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/6789d260-3a98-4cc6-bde0-fdce8b7bb633)
+<img src="https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/6789d260-3a98-4cc6-bde0-fdce8b7bb633" width="600" height="400">
 
 #### Least connection
 ![Screenshot 2023-11-19 022053](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/a2a1106b-28ff-4731-a517-ed62cd907791)
-![Screenshot 2023-11-19 022117](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/7e7c4f3f-8bd2-4802-a9a2-a2ec4d397308)
+<img src="https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/7e7c4f3f-8bd2-4802-a9a2-a2ec4d397308" width="600" height="400">
 
 #### IP hash
 ![Screenshot 2023-11-19 022320](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/545facc8-ccc6-4311-8faf-1e49844d9554)
-![Screenshot 2023-11-19 022346](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/4f6b91e3-63cd-4d59-b077-e6764de1bc5f)
+<img src="https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/4f6b91e3-63cd-4d59-b077-e6764de1bc5f" width="600" height="400">
 
 ### Grafik
 <foto>
