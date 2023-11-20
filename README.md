@@ -699,6 +699,7 @@ Jalankan command berikut untuk dianalisis
 ### Grafik
 ![Screenshot 2023-11-20 185306](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/cbd43e55-17a7-491b-82ca-c4d8ad21e15d)
 
+Least connection memiliki waktu request tercepat.
 
 # Nomor 9
 Dengan menggunakan algoritma Round Robin, lakukan testing dengan menggunakan 3 worker, 2 worker, dan 1 worker sebanyak 100 request dengan 10 request/second, kemudian tambahkan grafiknya pada grimoire.
@@ -848,6 +849,7 @@ Jika ingin menggunakan 2 Worker hapus worker sehingga jumlah worker sesuai yang 
 #### Grafik
 ![Screenshot 2023-11-20 190141](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/029dda55-43df-495d-b745-9f9f71ba2200)
 
+1 Worker memiliki waktu request terlama.
 
 # Nomor 10
 Selanjutnya coba tambahkan konfigurasi autentikasi di LB dengan dengan kombinasi username: “netics” dan password: “ajkyyy”, dengan yyy merupakan kode kelompok. Terakhir simpan file “htpasswd” nya di /etc/nginx/rahasisakita/
