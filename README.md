@@ -485,7 +485,7 @@ echo 'server {
 Gunakan `lynx localhost` untuk periksa apakah konfigurasi web sudah bekerja dengan benar.
 
 ### Result Nomor 6
-<foto>
+![Screenshot 2023-11-20 182524](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/e63918fe-773c-4cde-bea4-b4a9a596e082)
 
 # Nomor 7
 Kepala suku dari Bredt Region memberikan resource server sebagai berikut: Lawine, 4GB, 2vCPU, dan 80 GB SSD. Linie, 2GB, 2vCPU, dan 50 GB SSD. Lugner 1GB, 1vCPU, dan 25 GB SSD. Aturlah agar Eisen dapat bekerja dengan maksimal, lalu lakukan testing dengan 1000 request dan 100 request/second.
@@ -906,7 +906,10 @@ service nginx restart
 Jalankan `lynx http://granz.channel.it03.com/` pada Revolte untuk melihat apakah autentikasi bisa berfungsi.
 
 ### Result Nomor 10
-<foto>
+![Screenshot 2023-11-20 182755](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/60bda9de-c8c7-43ab-8991-c78ee3d68977)
+
+
+![Screenshot 2023-11-20 182808](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/2ba9a3da-c9b9-4e51-96c2-79f3c6337afd)
 
 # Nomor 11
 Lalu buat untuk setiap request yang mengandung /its akan di proxy passing menuju halaman https://www.its.ac.id. hint: (proxy_pass)
@@ -1037,10 +1040,10 @@ Jalankan `lynx http://granz.channel.it03.com/` pada node Revolte! Jika dijalanka
 ### Result Nomor 12
 
 #### Selain Revolte
-<foto>
+![Screenshot 2023-11-20 182911](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/dcecd230-02a6-42b8-b0f0-437d32301c93)
 
 #### Revolte
-<foto>
+![Screenshot 2023-11-20 183638](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/af78d7e8-6021-4ba6-82e5-68d4b0043bbc)
 
 # Nomor 13
 Semua data yang diperlukan, diatur pada Denken dan harus dapat diakses oleh Frieren, Flamme, dan Fern.
