@@ -1052,9 +1052,12 @@ Jalankan `lynx http://granz.channel.it03.com/` pada node Revolte! Jika dijalanka
 Semua data yang diperlukan, diatur pada Denken dan harus dapat diakses oleh Frieren, Flamme, dan Fern.
 
 Lakukan konfigurasi Database Server pada DENKEN
-`apt-get install mariadb-server -y`
-`service mysql restart`
-`mysql`
+```
+apt-get install mariadb-server -y
+service mysql restart`]
+mysql
+```
+Masukkan command berikut pada mysql
 ```
 CREATE USER 'kelompokit03'@'%' IDENTIFIED BY 'passwordit03';
 CREATE USER 'kelompokit03'@'granz.channel.it03.com' IDENTIFIED BY 'passwordit03';
@@ -1072,12 +1075,16 @@ skip-bind-address
 ```
 
 Lakukan konfigurasi Laravel Worker pada setiap Worker (FERN, FLAMME, FRIEREN)
-`apt-get install mariadb-client -y`
+```
+apt-get install mariadb-client -y
+```
 
 Untuk memastikan bahwa database pada denken juga dapat diakses melalui laravel worker, gunakan command berikut 
-`mariadb --host=10.65.2.2 --port=3306 --user=kelompokit03 --password`
+```
+mariadb --host=10.65.2.2 --port=3306 --user=kelompokit03 --password
+```
 
-### Result
+### Result Nomor 13
 ![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/541d7eb7-5b94-4b07-9872-a9f6d1bcde0c)
 
 # Nomor 14
@@ -1091,9 +1098,10 @@ chmod +x composer.phar
 mv composer.phar /usr/bin/composer
 ```
 
-git clone github
-`cd /var/www`
-
+git clone github pada dir `/var/www`
+```
+cd /var/www
+```
 ```
 git clone https://github.com/martuafernando/laravel-praktikum-jarkom
 composer update
@@ -1101,7 +1109,9 @@ composer install
 ```
 
 Lakukan konfigurasi pada ketiga Laravel Worker
-`cp /var/www/laravel-praktikum-jarkom/.env.example /var/www/laravel-praktikum-jarkom/.env`
+```
+cp /var/www/laravel-praktikum-jarkom/.env.example /var/www/laravel-praktikum-jarkom/.env
+```
 
 `.env`
 ```
@@ -1129,9 +1139,13 @@ Database pada Denken akan terisi
 ![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/0bb512f5-aa69-4b64-9863-5b30f59f46ce)
 
 Selanjutnya lakukan deployment pada worker
+
 Pembagian port seperti berikut
+
 Fern : 8001
+
 Flamme : 8002
+
 Frieren : 8003
 
 `/etc/nginx/sites-available/fff`
@@ -1172,6 +1186,8 @@ service nginx restart
 ```
 
 Lakukan test menggunakan `lynx localhost:[port]` (port menyesuaikan worker)
+
+### Result Nomor 14
 ![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/13f3a5aa-111d-4c4f-9967-fae912a9432c)
 
 # Nomor 15
@@ -1188,9 +1204,11 @@ Buat file `register.json` pada client yang berisi
 ```
 
 Jalankan testing berikut
-`ab -n 100 -c 10 -p register.json -T application/json http://10.65.4.6:8001/api/auth/register`
+```
+ab -n 100 -c 10 -p register.json -T application/json http://10.65.4.6:8001/api/auth/register
+```
 
-### Result
+### Result Nomor 15
 ![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/c675fcb4-3b87-47ec-a251-80c2573703da)
 
 # Nomor 16
@@ -1205,9 +1223,11 @@ Buat file `login.json` pada client yang berisi
 ```
 
 Jalankan testing berikut
-`ab -n 100 -c 10 -p login.json -T application/json http://10.65.4.6:8001/api/auth/login`
+```
+ab -n 100 -c 10 -p login.json -T application/json http://10.65.4.6:8001/api/auth/login
+```
 
-### Result
+### Result Nomor 16
 ![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/1bec8056-04c1-4fd9-a509-2b42310e2f57)
 
 # Nomor 17
@@ -1218,10 +1238,13 @@ Jalankan command berikut
 curl -X POST -H "Content-Type: application/json" -d @login.json http://10.65.4.6:8001/api/auth/login > login_output.txt
 token=$(cat login_output.txt | jq -r '.token')
 ```
-Jalankan testing berikut
-`ab -n 100 -c 10 -H "Authorization: Bearer $token" http://10.65.4.6:8001/api/me`
 
-### Result
+Jalankan testing berikut
+```
+ab -n 100 -c 10 -H "Authorization: Bearer $token" http://10.65.4.6:8001/api/me
+```
+
+### Result Nomor 17
 ![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/ea4c526d-4d57-4534-8ebf-11299fa629f3)
 
 # Nomor 18
@@ -1244,14 +1267,18 @@ server {
     }
 }
 ```
-```ln -s /etc/nginx/sites-available/laravel-fff /etc/nginx/sites-enabled/```
+```
+ln -s /etc/nginx/sites-available/laravel-fff /etc/nginx/sites-enabled/
+```
 
 Pastikan pada Heiter, riegel.canyon.it03.com mengarah pada IP Load Balancer (10.65.2.3)
 
 Lakukan testing menggunakan coommand berikut
-```ab -n 100 -c 10 -p login.json -T application/json http://riegel.canyon.it03.com/api/auth/login```
+```
+ab -n 100 -c 10 -p login.json -T application/json http://riegel.canyon.it03.com/api/auth/login
+```
 
-### Result 
+### Result Nomor 18
 ![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/c933f39c-d391-471f-b888-993641f7c11f)
 
 Fern
@@ -1345,6 +1372,11 @@ pm.max_spare_servers = 15' > /etc/php/8.0/fpm/pool.d/www.conf
 service php8.0-fpm restart
 ```
 
+Lakukan testing pada client untuk setiap script 
+```
+ab -n 100 -c 10 -p login.json -T application/json http://riegel.canyon.it03.com/api/auth/login
+```
+
 ### Result 
 `testing1.sh`
 ![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/cb6438ca-779e-4c09-9824-08b30e53b495)
@@ -1377,8 +1409,10 @@ server {
     }
 }
 ```
-```ln -s /etc/nginx/sites-available/laravel-fff /etc/nginx/sites-enabled/```
-```service nginx restart```
+```
+ln -s /etc/nginx/sites-available/laravel-fff /etc/nginx/sites-enabled/
+service nginx restart
+```
 
 ### Result
 ![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/6831cd2a-0639-470a-a2ca-512c4efef86a)
