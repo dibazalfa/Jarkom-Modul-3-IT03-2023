@@ -702,7 +702,7 @@ Jalankan command berikut untuk dianalisis
 ### Grafik
 ![Screenshot 2023-11-20 185306](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/cbd43e55-17a7-491b-82ca-c4d8ad21e15d)
 
-Least connection memiliki waktu request tercepat.
+Least connection memiliki proses request tercepat.
 
 # Nomor 9
 Dengan menggunakan algoritma Round Robin, lakukan testing dengan menggunakan 3 worker, 2 worker, dan 1 worker sebanyak 100 request dengan 10 request/second, kemudian tambahkan grafiknya pada grimoire.
