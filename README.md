@@ -220,6 +220,7 @@ Gunakan `lynx localhost` untuk periksa apakah konfigurasi web sudah bekerja deng
 
 ### Result Nomor 6
 <foto>
+
 # Nomor 7
 
 # Nomor 8
