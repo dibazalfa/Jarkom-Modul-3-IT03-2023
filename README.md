@@ -226,6 +226,9 @@ Lakukan konfigurasi sesuai dengan peta yang sudah diberikan.
 
 Menetapkan domain record untuk `riegel.canyon.it03.com` ke worker Laravel dan `granz.channel.it03.com` ke worker PHP, dengan kedua domain tersebut mengarah ke alamat IP 10.65.x.1.
 
+
+Berikut adalah script yang bisa digunakan untuk konfigurasi awal:
+
 ### Heiter.sh
 ```
 apt-get update
@@ -293,8 +296,10 @@ echo "$granz" > /etc/bind/jarkom/granz.channel.it03.com
 service bind9 restart
 ```
 ### Result Nomor 1
-![Screenshot 2023-11-20 181728](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/09a9a83d-e49e-4f88-9f14-f6927ca40da6)
+![Screenshot 2023-11-20 182002](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/2f270b93-7fcc-4e66-9d26-95def42aecb2)
 
+
+![Screenshot 2023-11-20 181728](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/09a9a83d-e49e-4f88-9f14-f6927ca40da6)
 
 # Nomor 2
 Semua CLIENT harus menggunakan konfigurasi dari DHCP Server. Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.16 - [prefix IP].3.32 dan [prefix IP].3.64 - [prefix IP].3.80
