@@ -222,6 +222,101 @@ Gunakan `lynx localhost` untuk periksa apakah konfigurasi web sudah bekerja deng
 <foto>
 
 # Nomor 7
+Kepala suku dari Bredt Region memberikan resource server sebagai berikut: Lawine, 4GB, 2vCPU, dan 80 GB SSD. Linie, 2GB, 2vCPU, dan 50 GB SSD. Lugner 1GB, 1vCPU, dan 25 GB SSD. Aturlah agar Eisen dapat bekerja dengan maksimal, lalu lakukan testing dengan 1000 request dan 100 request/second. (7)
+
+Domain pada DNS Server diarahkan ke Load Balancer Eisen seperti sebagai berikut:
+
+### Heiter.sh
+```
+riegel="
+;
+;BIND data file for local loopback interface
+;
+\$TTL    604800
+@    IN    SOA    riegel.canyon.it03.com. root.riegel.canyon.it03.com. (
+        2        ; Serial
+                604800        ; Refresh
+                86400        ; Retry
+                2419200        ; Expire
+                604800 )    ; Negative Cache TTL
+;
+@    IN    NS    riegel.canyon.it03.com.
+@       IN    A    10.65.2.3
+"
+echo "$riegel" > /etc/bind/jarkom/riegel.canyon.it03.com
+
+granz="
+;
+;BIND data file for local loopback interface
+;
+\$TTL    604800
+@    IN    SOA    granz.channel.it03.com. root.granz.channel.it03.com. (
+        2        ; Serial
+                604800        ; Refresh
+                86400        ; Retry
+                2419200        ; Expire
+                604800 )    ; Negative Cache TTL
+;
+@    IN    NS    granz.channel.it03.com.
+@       IN    A    10.65.2.3
+"
+echo "$granz" > /etc/bind/jarkom/granz.channel.it03.com
+```
+
+`@       IN    A    10.65.2.3` disini IP diarahkan ke node Load Balancer Eisen
+
+Konfigurasi /root/.bashrc untuk nginx pada node Eisen sebagai berikut:
+
+### Eisen.sh
+```
+cp /etc/nginx/sites-available/default /etc/nginx/sites-available/lb_php
+
+echo '
+    upstream worker {
+    server 10.65.3.2;
+    server 10.65.3.3;
+    server 10.65.3.4;
+}
+
+server {
+    listen 80;
+    server_name granz.channel.it03.com www.granz.channel.it03.com;
+
+    root /var/www/html;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+        location / {
+
+        proxy_pass http://worker;
+    }
+
+ln -sf /etc/nginx/sites-available/lb_php /etc/nginx/sites-enabled/
+
+if [ -f /etc/nginx/sites-enabled/default ]; then
+    rm /etc/nginx/sites-enabled/default
+fi
+
+service nginx restart
+```
+
+Buka Node Revolte (client) dan install depedencies berikut
+
+```
+apt update
+apt install lynx -y
+apt install htop -y
+apt install apache2-utils -y
+apt-get install jq -y
+```
+
+Pada node Revolte (client) jalankan command berikut:
+`ab -n 1000 -c 100 http://granz.channel.it03.com/`
+
+### Result Nomor 7
+<foto>
 
 # Nomor 8
 
