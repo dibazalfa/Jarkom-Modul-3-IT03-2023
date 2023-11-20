@@ -583,10 +583,180 @@ Jika ingin menggunakan 2 Worker hapus worker sehingga jumlah worker sesuai yang 
 
 
 # Nomor 10
+Selanjutnya coba tambahkan konfigurasi autentikasi di LB dengan dengan kombinasi username: “netics” dan password: “ajkyyy”, dengan yyy merupakan kode kelompok. Terakhir simpan file “htpasswd” nya di /etc/nginx/rahasisakita/
+
+Membuat folder rahasisakita dengan `mkdir /etc/nginx/rahasisakita` lalu `htpasswd -c /etc/nginx/rahasisakita/htpasswd netics` untuk membuat kredensial.
+```
+Username: netics
+Password: ajkit03
+```
+
+Menambahkan script didalam Eisen.sh
+```
+auth_basic "Restricted Content";
+auth_basic_user_file /etc/nginx/rahasisakita/htpasswd;
+```
+
+Script keseluruhan akan terlihat seperti:
+
+### Eisen.sh
+```
+cp /etc/nginx/sites-available/default /etc/nginx/sites-available/lb_php
+
+echo '
+    upstream worker {
+    server 10.65.3.2; 
+    server 10.65.3.3;
+    server 10.65.3.4;
+}
+
+server {
+    listen 80;
+    server_name granz.channel.it03.com www.granz.channel.it03.com;
+
+    root /var/www/html;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+        location / {
+
+        proxy_pass http://worker;
+
+        auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/rahasisakita/htpasswd;
+    }
+
+ln -sf /etc/nginx/sites-available/lb_php /etc/nginx/sites-enabled/
+
+if [ -f /etc/nginx/sites-enabled/default ]; then
+    rm /etc/nginx/sites-enabled/default
+fi
+
+service nginx restart
+```
+
+Jalankan `lynx http://granz.channel.it03.com/` pada Revolte untuk melihat apakah autentikasi bisa berfungsi.
+
+### Result Nomor 10
+<foto>
 
 # Nomor 11
+Lalu buat untuk setiap request yang mengandung /its akan di proxy passing menuju halaman https://www.its.ac.id. hint: (proxy_pass)
+
+Tambahkan script berikut supaya kita bisa terkoneksi dengan its:
+
+### Eisen.sh
+```
+location ~ /its {
+    proxy_pass https://www.its.ac.id;
+    proxy_set_header Host www.its.ac.id;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+Sehingga script keseluruhan akan terlihat menjadi:
+
+### Eisen.sh
+```
+echo '
+    upstream worker {
+    server 10.65.3.2;
+    server 10.65.3.3;
+    server 10.65.3.4;
+}
+
+server {
+    listen 80;
+    server_name granz.channel.it03.com www.granz.channel.it03.com;
+
+    root /var/www/html;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+        location / {
+
+        proxy_pass http://worker;
+
+#       auth_basic "Restricted Content";
+#       auth_basic_user_file /etc/nginx/rahasisakita/htpasswd;
+    }
+location ~ /its {
+    proxy_pass https://www.its.ac.id;
+    proxy_set_header Host www.its.ac.id;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+} ' > /etc/nginx/sites-available/lb_php
+
+ln -sf /etc/nginx/sites-available/lb_php /etc/nginx/sites-enabled/
+#rm /etc/nginx/sites-enabled/default
+
+if [ -f /etc/nginx/sites-enabled/default ]; then
+    rm /etc/nginx/sites-enabled/default
+fi
+
+service nginx restart
+```
+
+Jalankan `lynx http://granz.channel.it03.com/its` pada Revolte.
+
+### Result Nomor 11
+<foto>
+
 
 # Nomor 12
+Selanjutnya LB ini hanya boleh diakses oleh client dengan IP [Prefix IP].3.69, [Prefix IP].3.70, [Prefix IP].4.167, dan [Prefix IP].4.168.
+
+Tambahkan script untuk memberikan akses izin ke IP yang ditentukan:
+```
+location / {
+        allow 10.65.3.69;
+        allow 10.65.3.70;
+        allow 10.65.3.167;
+        allow 10.65.3.168;
+        deny all;
+    proxy_pass http://worker;
+}
+```
+
+Lalu tentukan client tetap (client yang memiliki akses). Tambahkan konfigurasi pada dhcp server (Himmel)
+```
+host Revolte {
+    hardware ethernet 72:b7:93:55:30:f5;
+    fixed-address 10.65.3.69;
+}
+```
+
+- `72:b7:93:55:30:f5` didapatkan dari node client (Revolte) dengan menggunakan `ip a` lalu periksa yang terhubung dengan DHCP Relay (Aura) yaitu eth0. Catat ip ethernetnya.
+- `10.65.3.69` didapatkan dengan menentukan ip 10.65.3.69 sebagai ip client (Revolte) lalu masukan 10.65.3.69 kedalam network configuration = `/etc/network/interfaces`
+
+
+### Revolte.sh
+```
+config="auto eth0
+iface eth0 inet dhcp
+hwaddress ether 72:b7:93:55:30:f5
+"
+echo "$config" > /etc/network/interfaces
+```
+Script diatas memodifikasi `/etc/network/interfaces` atau juga dikenal dengan konfigurasi `telnet`.
+
+Jalankan `lynx http://granz.channel.it03.com/` pada node Revolte! Jika dijalankan pada node lain tidak akan berfungsi karena tidak memiliki izin akses.
+
+### Result Nomor 12
+
+#### Selain Revolte
+<foto>
+
+#### Revolte
+<foto>
 
 # Nomor 13
 
