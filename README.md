@@ -1043,8 +1043,123 @@ Jalankan `lynx http://granz.channel.it03.com/` pada node Revolte! Jika dijalanka
 <foto>
 
 # Nomor 13
+Semua data yang diperlukan, diatur pada Denken dan harus dapat diakses oleh Frieren, Flamme, dan Fern.
+
+Lakukan konfigurasi Database Server pada DENKEN
+`apt-get install mariadb-server -y`
+`service mysql restart`
+`mysql`
+```
+CREATE USER 'kelompokit03'@'%' IDENTIFIED BY 'passwordit03';
+CREATE USER 'kelompokit03'@'granz.channel.it03.com' IDENTIFIED BY 'passwordit03';
+CREATE DATABASE dbkelompokit03;
+GRANT ALL PRIVILEGES ON *.* TO 'kelompokit03'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'kelompokit03'@'granz.channel.it03.com';
+FLUSH PRIVILEGES;
+```
+
+`/etc/mysql/my.cnf`
+```
+[mysqld]
+skip-networking=0
+skip-bind-address
+```
+
+Lakukan konfigurasi Laravel Worker pada setiap Worker (FERN, FLAMME, FRIEREN)
+`apt-get install mariadb-client -y`
+
+Untuk memastikan bahwa database pada denken juga dapat diakses melalui laravel worker, gunakan command berikut 
+`mariadb --host=10.65.2.2 --port=3306 --user=kelompokit03 --password`
+
+### Result
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/541d7eb7-5b94-4b07-9872-a9f6d1bcde0c)
 
 # Nomor 14
+Frieren, Flamme, dan Fern memiliki Granz Channel sesuai dengan quest guide berikut https://github.com/martuafernando/laravel-praktikum-jarkom . Jangan lupa melakukan instalasi PHP8.0 dan Composer
+
+Lakukan instalasi berikut pada ketiga Laravel Worker
+`apt-get install php8.0-mbstring php8.0-xml php8.0-cli php8.0-common php8.0-intl php8.0-opcache php8.0-readline php8.0-mysql php8.0-fpm php8.0-curl unzip wget -y`
+`wget https://getcomposer.org/download/2.0.13/composer.phar`
+`chmod +x composer.phar`
+`mv composer.phar /usr/bin/composer`
+
+git clone github
+`cd /var/www`
+`git clone https://github.com/martuafernando/laravel-praktikum-jarkom`
+`composer update`
+`composer install`
+
+Lakukan konfigurasi pada ketiga Laravel Worker
+`cp /var/www/laravel-praktikum-jarkom/.env.example /var/www/laravel-praktikum-jarkom/.env`
+
+`.env`
+```
+DB_CONNECTION=mysql
+DB_HOST=10.65.2.2
+DB_PORT=3306
+DB_DATABASE=dbkelompokit03
+DB_USERNAME=kelompokit03
+DB_PASSWORD=passwordit03
+```
+Jalankan command berikut 
+`
+php artisan migrate:fresh
+php artisan db:seed --class=AiringsTableSeeder
+php artisan key:generate
+php artisan config:cache
+php artisan migrate
+php artisan db:seed
+php artisan storage:link
+php artisan jwt:secret
+php artisan config:clear
+chown -R www-data.www-data /var/www/laravel-praktikum-jarkom/storage
+`
+Database pada Denken akan terisi
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/0bb512f5-aa69-4b64-9863-5b30f59f46ce)
+
+Selanjutnya lakukan deployment pada worker
+Pembagian port seperti berikut
+Fern : 8001
+Flamme : 8002
+Frieren : 8003
+
+`/etc/nginx/sites-available/fff`
+```
+server {
+
+    listen [port];
+
+    root /var/www/laravel-praktikum-jarkom/public;
+
+    index index.php index.html index.htm;
+    server_name _;
+
+    location / {
+            try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # pass PHP scripts to FastCGI server
+    location ~ \.php$ {
+    include snippets/fastcgi-php.conf;
+    fastcgi_pass unix:/var/run/php/php8.0-fpm.sock;
+    }
+
+location ~ /\.ht {
+            deny all;
+    }
+
+    error_log /var/log/nginx/fff_error.log;
+    access_log /var/log/nginx/fff_access.log;
+}
+```
+Kemudian jalankan command berikut 
+`ln -s /etc/nginx/sites-available/fff /etc/nginx/sites-enabled/`
+`chown -R www-data.www-data /var/www/laravel-praktikum-jarkom/storage`
+`service php8.0-fpm start`
+`service nginx restart`
+
+Lakukan test menggunakan `lynx localhost:[port]` (port menyesuaikan worker)
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/13f3a5aa-111d-4c4f-9967-fae912a9432c)
 
 # Nomor 15
 
