@@ -39,6 +39,7 @@ Lakukan konfigurasi sesuai dengan peta yang sudah diberikan.
 Semua CLIENT harus menggunakan konfigurasi dari DHCP Server. Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.16 - [prefix IP].3.32 dan [prefix IP].3.64 - [prefix IP].3.80
 
 Pertama-tama, lakukan setup DHCP Relay terlebih dahulu pada AURA.
+
 `/etc/default/isc-dhcp-relay`
 ```
 SERVERS="10.65.1.2" #IP Himmel (DNS Server)
@@ -46,9 +47,11 @@ INTERFACES="eth1 eth3 eth4"
 OPTIONS=
 ```
 Lalu `echo net.ipv4.ip_forward=1 > /etc/sysctl.conf`
+
 Terakhir, jangan lupa untuk melakukan restart `service isc-dhcp-relay restart`
 
 Kemudian, lakukan konfigurasi DHCP Server pada HIMMEL (untuk nomor 2)
+
 `echo INTERFACESv4="eth0" > /etc/default/isc-dhcp-server`
 
 `/etc/dhcp/dhcpd.conf`
@@ -69,6 +72,7 @@ subnet 10.65.4.0 netmask 255.255.255.0 {
 Client yang melalui Switch4 mendapatkan range IP dari [prefix IP].4.12 - [prefix IP].4.20 dan [prefix IP].4.160 - [prefix IP].4.168
 
 Tambahkan konfigurasi DHCP Server pada HIMMEL 
+
 `/etc/dhcp/dhcpd.conf`
 ```
 subnet 10.65.1.0 netmask 255.255.255.0 {}
@@ -90,6 +94,8 @@ subnet 10.65.4.0 netmask 255.255.255.0 {
 Client mendapatkan DNS dari Heiter dan dapat terhubung dengan internet melalui DNS tersebut
 
 Ubah konfigurasi DHCP Server pada HIMMEL agar mengarah ke IP DNS (10.65.1.3)
+
+`/etc/dhcp/dhcpd.conf`
 ```
 subnet 10.65.1.0 netmask 255.255.255.0 {}
 
@@ -111,6 +117,7 @@ subnet 10.65.4.0 netmask 255.255.255.0 {
 ```
 
 Lakukan konfigurasi DNS Server pada HEITER
+
 `/etc/bind/named.conf.options`
 ```
 nano /etc/bind/named.conf.options
@@ -126,6 +133,7 @@ Uji coba ping google.com di client, jika berhasil maka sudah terhubung
 Lama waktu DHCP server meminjamkan alamat IP kepada Client yang melalui Switch3 selama 3 menit sedangkan pada client yang melalui Switch4 selama 12 menit. Dengan waktu maksimal dialokasikan untuk peminjaman alamat IP selama 96 menit
 
 Tambahkan konfigurasi DHCP Server pada HIMMEL seperti berikut
+
 `/etc/dhcp/dhcpd.conf`
 ```
 subnet 10.65.1.0 netmask 255.255.255.0 {}
@@ -151,6 +159,9 @@ subnet 10.65.4.0 netmask 255.255.255.0 {
 }
 ```
 ### Result Nomor 1 - 5 
+![image](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/103043684/39471c2e-405a-4806-b5d0-a5416f4490e0)
+
+Sein merupakan Client yang memiliki IP Dynamic. IP yang didapat adalah 10.65.4.14 dengan lease time 720, ini sudah sesuai dengan konfigurasi yang diberikan. Client mengarah pada DNS Server dan sudah terhubung dengan internet.
 
 # Nomor 6
 
