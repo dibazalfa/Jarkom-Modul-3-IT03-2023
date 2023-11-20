@@ -647,7 +647,7 @@ Lalu buat untuk setiap request yang mengandung /its akan di proxy passing menuju
 
 Tambahkan script berikut supaya kita bisa terkoneksi dengan its:
 
-### Eisen.sh
+
 ```
 location ~ /its {
     proxy_pass https://www.its.ac.id;
@@ -736,19 +736,35 @@ host Revolte {
 - `72:b7:93:55:30:f5` didapatkan dari node client (Revolte) dengan menggunakan `ip a` lalu periksa yang terhubung dengan DHCP Relay (Aura) yaitu eth0. Catat ip ethernetnya.
 - `10.65.3.69` didapatkan dengan menentukan ip 10.65.3.69 sebagai ip client (Revolte) lalu masukan 10.65.3.69 kedalam network configuration = `/etc/network/interfaces`
 
+### Revolte
+### /etc/network/interfaces
+```
+auto eth0
+iface eth0 inet dhcp
+hwaddress ether 72:b7:93:55:30:f5
+```
+
+Script diatas memodifikasi `/etc/network/interfaces` atau juga dikenal dengan konfigurasi `telnet`.
+
+IP Revolte setelah konfigurasi:
+
+
+![Screenshot 2023-11-19 025207](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/e966b06f-b6c5-4b59-bbac-388ef1ecad9d)
 
 ### Revolte.sh
 ```
+apt update
+apt install lynx -y
+apt install htop -y
+apt install apache2-utils -y
+apt-get install jq -y
+
 config="auto eth0
 iface eth0 inet dhcp
 hwaddress ether 72:b7:93:55:30:f5
 "
 echo "$config" > /etc/network/interfaces
 ```
-Script diatas memodifikasi `/etc/network/interfaces` atau juga dikenal dengan konfigurasi `telnet`.
-
-IP Revolte setelah konfigurasi:
-![Screenshot 2023-11-19 025207](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/e966b06f-b6c5-4b59-bbac-388ef1ecad9d)
 
 Jalankan `lynx http://granz.channel.it03.com/` pada node Revolte! Jika dijalankan pada node lain tidak akan berfungsi karena tidak memiliki izin akses.
 
