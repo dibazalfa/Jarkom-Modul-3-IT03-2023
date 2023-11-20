@@ -697,7 +697,8 @@ Jalankan command berikut untuk dianalisis
 <img src="https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/4f6b91e3-63cd-4d59-b077-e6764de1bc5f" width="600" height="400">
 
 ### Grafik
-<foto
+![Screenshot 2023-11-20 185306](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/cbd43e55-17a7-491b-82ca-c4d8ad21e15d)
+
 
 # Nomor 9
 Dengan menggunakan algoritma Round Robin, lakukan testing dengan menggunakan 3 worker, 2 worker, dan 1 worker sebanyak 100 request dengan 10 request/second, kemudian tambahkan grafiknya pada grimoire.
@@ -845,7 +846,7 @@ Jika ingin menggunakan 2 Worker hapus worker sehingga jumlah worker sesuai yang 
 <img src="https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/c5d33869-1ee7-4d32-9f88-5dfc8fed7b3e" width="600" height="400">
 
 #### Grafik
-<foto
+![Screenshot 2023-11-20 190141](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/029dda55-43df-495d-b745-9f9f71ba2200)
 
 
 # Nomor 10
