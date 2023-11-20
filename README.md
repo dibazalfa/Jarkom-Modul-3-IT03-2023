@@ -7,6 +7,9 @@ Nama | NRP | Github
 Adiba Zalfa Camilla | 5027211060 | https://github.com/dibazalfa
 Wiridlangit Suluh Jiwangga | 5027211064 | https://github.com/wiridlangit
 
+### Grimoire
+https://its.id/m/IT03_Grimoire
+
 ## Daftar isi
 - [Topologi](#topologi)
 - [Konfigurasi](#konfigurasi)
