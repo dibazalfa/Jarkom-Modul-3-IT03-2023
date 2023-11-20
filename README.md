@@ -36,9 +36,265 @@ Wiridlangit Suluh Jiwangga | 5027211064 | https://github.com/wiridlangit
 
 
 # Konfigurasi
+- Aura (DHCP Relay)
+```
+auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet static
+	address 10.65.1.1
+	netmask 255.255.255.0
+
+auto eth2
+iface eth2 inet static
+	address 10.65.2.1
+	netmask 255.255.255.0
+
+auto eth3
+iface eth3 inet static
+	address 10.65.3.1
+	netmask 255.255.255.0
+
+auto eth4
+iface eth4 inet static
+	address 10.65.4.1
+	netmask 255.255.255.0
+```
+- Heiter (DNS Server)
+```
+auto eth0
+iface eth0 inet static
+	address 10.65.1.3
+	netmask 255.255.255.0
+	gateway 10.65.1.1
+```
+- Himmel (DHCP Server)
+```
+auto eth0
+iface eth0 inet static
+	address 10.65.1.2
+	netmask 255.255.255.0
+	gateway 10.65.1.1
+```
+- Eisen (Load Balancer)
+```
+auto eth0
+iface eth0 inet static
+	address 10.65.2.3
+	netmask 255.255.255.0
+	gateway 10.65.2.1
+```
+- Denken (Databse Server)
+```
+auto eth0
+iface eth0 inet static
+	address 10.65.2.2
+	netmask 255.255.255.0
+	gateway 10.65.2.1
+```
+- Frieren (Laravel Worker)
+```
+auto eth0
+iface eth0 inet static
+	address 10.65.4.4
+	netmask 255.255.255.0
+	gateway 10.65.4.1
+```
+- Flamme (Laravel Worker)
+```
+auto eth0
+iface eth0 inet static
+	address 10.65.4.5
+	netmask 255.255.255.0
+	gateway 10.65.4.1
+```
+- Fern (Laravel Worker)
+```
+auto eth0
+iface eth0 inet static
+	address 10.65.4.6
+	netmask 255.255.255.0
+	gateway 10.65.4.1
+```
+- Lawine (PHP Worker)
+```
+auto eth0
+iface eth0 inet static
+	address 10.65.3.4
+	netmask 255.255.255.0
+	gateway 10.65.3.1
+```
+- Linie (PHP Worker)
+```
+auto eth0
+iface eth0 inet static
+	address 10.65.3.3
+	netmask 255.255.255.0
+	gateway 10.65.3.1
+```
+- Lugner (PHP Worker)
+```
+auto eth0
+iface eth0 inet static
+	address 10.65.3.2
+	netmask 255.255.255.0
+	gateway 10.65.3.1
+```
+- Revolte (Client Tetap)
+```
+auto eth0
+iface eth0 inet dhcp
+hwaddress ether 72:b7:93:55:30:f5
+```
+- Stark, Sein, Richter (Client)
+```
+auto eth0
+iface eth0 inet dhcp
+```
+
+### Install Depedencies
+- Aura (DHCP Relay)
+```
+apt-get update
+apt-get install isc-dhcp-relay -y
+```
+- Heiter (DNS Server)
+```
+apt-get update
+apt-get install bind9 -y
+```
+- Himmel (DHCP Server)
+```
+apt-get update
+apt-get install isc-dhcp-server -y
+```
+- Eisen (Load Balancer)
+```
+apt-get update
+apt-get install apache2-utils -y
+apt-get install nginx -y
+apt-get install lynx -y
+```
+- Denken (Databse Server)
+```
+apt-get update
+apt-get install mariadb-server -y
+```
+- Fern, Flamme, Frieren (Laravel Worker)
+```
+apt-get update
+apt-get install mariadb-client -y
+apt-get install lynx -y
+apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common gnupg2
+curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
+sh -c 'echo "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list'
+apt-get update
+apt-get install php8.0-mbstring php8.0-xml php8.0-cli php8.0-common php8.0-intl php8.0-opcache php8.0-readline php8.0-mysql php8.0-fpm php8.0-curl unzip wget -y
+apt-get install nginx -y
+wget https://getcomposer.org/download/2.0.13/composer.phar
+chmod +x composer.phar
+mv composer.phar /usr/bin/composer
+apt-get install git -y
+git clone https://github.com/martuafernando/laravel-praktikum-jarkom /var/www/laravel-praktikum-jarkom
+composer update
+composer install
+```
+- Lugner, Lawine, Linie (PHP Worker)
+```
+apt-get update
+apt-get install nginx -y
+apt-get install lynx -y
+apt-get install php php-fpm -y
+apt-get install wget -y
+apt-get install unzip -y
+
+wget -O '/var/www/granz.channel.it03.com' 'https://drive.google.com/u/0/uc?id=1ViSkRq7SmwZgdK64eRbr5Fm1EGCTPrU1&export=download'
+```
+- Richter, Revolte, Sein, Stark (Client)
+```
+apt-get update
+apt-get install lynx -y
+apt-get install htop -y
+apt-get install apache2-utils -y
+apt-get install jq -y
+```
 
 # Nomor 1
 Lakukan konfigurasi sesuai dengan peta yang sudah diberikan.
+
+
+Menetapkan domain record untuk `riegel.canyon.it03.com` ke worker Laravel dan `granz.channel.it03.com` ke worker PHP, dengan kedua domain tersebut mengarah ke alamat IP 10.65.x.1.
+
+### Heiter.sh
+```
+apt-get update
+apt-get install bind9 -y
+
+forward="options {
+directory \"/var/cache/bind\";
+forwarders {
+  	   192.168.122.1;
+};
+
+allow-query{any;};
+listen-on-v6 { any; };
+};
+"
+echo "$forward" > /etc/bind/named.conf.options
+
+echo "zone \"riegel.canyon.it03.com\" {
+	type master;
+	file \"/etc/bind/jarkom/riegel.canyon.it03.com\";
+};
+
+zone \"granz.channel.it03.com\" {
+	type master;
+	file \"/etc/bind/jarkom/granz.channel.it03.com\";
+};
+" > /etc/bind/named.conf.local
+
+mkdir /etc/bind/jarkom
+
+riegel="
+;
+;BIND data file for local loopback interface
+;
+\$TTL    604800
+@    IN    SOA    riegel.canyon.it03.com. root.riegel.canyon.it03.com. (
+        2        ; Serial
+                604800        ; Refresh
+                86400        ; Retry
+                2419200        ; Expire
+                604800 )    ; Negative Cache TTL
+;                   
+@    IN    NS    riegel.canyon.it03.com.
+@       IN    A    10.65.4.6
+"
+echo "$riegel" > /etc/bind/jarkom/riegel.canyon.it03.com
+
+granz="
+;
+;BIND data file for local loopback interface
+;
+\$TTL    604800
+@    IN    SOA    granz.channel.it03.com. root.granz.channel.it03.com. (
+        2        ; Serial
+                604800        ; Refresh
+                86400        ; Retry
+                2419200        ; Expire
+                604800 )    ; Negative Cache TTL
+;                   
+@    IN    NS    granz.channel.it03.com.
+@       IN    A    10.65.3.2
+"
+echo "$granz" > /etc/bind/jarkom/granz.channel.it03.com
+
+service bind9 restart
+```
+### Result Nomor 1
+![Screenshot 2023-11-20 181728](https://github.com/dibazalfa/Jarkom-Modul-3-IT03-2023/assets/113527799/09a9a83d-e49e-4f88-9f14-f6927ca40da6)
+
 
 # Nomor 2
 Semua CLIENT harus menggunakan konfigurasi dari DHCP Server. Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.16 - [prefix IP].3.32 dan [prefix IP].3.64 - [prefix IP].3.80
@@ -749,7 +1005,7 @@ iface eth0 inet dhcp
 hwaddress ether 72:b7:93:55:30:f5
 ```
 
-Script diatas memodifikasi `/etc/network/interfaces` atau juga dikenal dengan konfigurasi `telnet`.
+Script diatas memodifikasi `/etc/network/interfaces` atau juga dikenal dengan konfigurasi node.
 
 IP Revolte setelah konfigurasi:
 
